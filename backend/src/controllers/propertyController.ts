@@ -3,6 +3,7 @@ import Property from '../models/Property';
 import Ward from '../models/Ward';
 import mongoose from 'mongoose';
 
+// Use Express.Multer.File for file types
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
   files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
