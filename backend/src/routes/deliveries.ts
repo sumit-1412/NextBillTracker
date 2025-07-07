@@ -10,6 +10,14 @@ import {
   getStaffHistory 
 } from '../controllers/deliveryController';
 import { Request } from 'express';
+import cloudinary from 'cloudinary';
+import fs from 'fs';
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const router = express.Router();
 
@@ -39,19 +47,25 @@ const upload = multer({
 });
 
 // POST /api/deliveries/upload-photo - Upload delivery photo
-router.post('/upload-photo', auth, requireStaff, upload.single('photo'), (req, res) => {
+router.post('/upload-photo', auth, requireStaff, upload.single('photo'), async (req, res) => {
   try {
     if (!req.file) {
       res.status(400).json({ message: 'No photo uploaded' });
       return;
     }
-    
-    // Generate full URL for the uploaded photo
-    const baseUrl = process.env.BACKEND_URL || 'http://localhost:8080';
-    const photoUrl = `${baseUrl}/uploads/delivery-photos/${req.file.filename}`;
-    res.json({ 
+
+    // Upload to Cloudinary
+    const result = await cloudinary.v2.uploader.upload(req.file.path, {
+      folder: 'delivery-photos',
+      resource_type: 'image',
+    });
+
+    // Remove local file after upload
+    fs.unlinkSync(req.file.path);
+
+    res.json({
       message: 'Photo uploaded successfully',
-      photoUrl: photoUrl
+      photoUrl: result.secure_url,
     });
   } catch (error) {
     console.error('Photo upload error:', error);
