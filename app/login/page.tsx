@@ -11,7 +11,12 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, Eye, EyeOff, AlertCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import Select from "react-select"
+import dynamic from "next/dynamic";
+import type { Props as SelectProps } from "react-select";
+const Select = dynamic<SelectProps<any>>( // type any for generic options
+  () => import("react-select"),
+  { ssr: false }
+);
 import { apiService } from "@/lib/api"
 
 const roleOptions = [

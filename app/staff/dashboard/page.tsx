@@ -309,7 +309,7 @@ export default function StaffDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Skeleton className="h-80" />
               <Skeleton className="h-80" />
-            </div>
+              </div>
           </div>
         </StaffLayout>
       </AuthGuard>
@@ -349,7 +349,7 @@ export default function StaffDashboard() {
               </CardContent>
             </Card>
 
-            <Card>
+          <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div className="space-y-2">
@@ -358,20 +358,20 @@ export default function StaffDashboard() {
                     <p className="text-xs text-muted-foreground">Active submissions</p>
                   </div>
                   <Calendar className="h-8 w-8 text-green-600" />
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            </CardContent>
+          </Card>
 
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                   <div className="space-y-2">
                     <p className="text-sm font-medium text-muted-foreground">This Week</p>
                     <p className="text-2xl font-bold">{stats.thisWeek}</p>
                     <p className="text-xs text-muted-foreground">Weekly progress</p>
                   </div>
                   <TrendingUp className="h-8 w-8 text-purple-600" />
-                </div>
+                    </div>
               </CardContent>
             </Card>
 
@@ -386,19 +386,19 @@ export default function StaffDashboard() {
                   <IndianRupee className="h-8 w-8 text-green-600" />
                 </div>
               </CardContent>
-            </Card>
+                </Card>
           </div>
 
           {/* Performance Overview */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Recent Deliveries */}
-            <Card>
+          <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2">
                   <Clock className="h-5 w-5" />
                   Recent Deliveries
-                </CardTitle>
-              </CardHeader>
+              </CardTitle>
+            </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {recentDeliveries.length === 0 ? (
@@ -467,8 +467,8 @@ export default function StaffDashboard() {
                         <div className="flex justify-between text-xs text-muted-foreground">
                           <span>{zone.delivered} delivered</span>
                           <span>{zone.pending} pending</span>
-                        </div>
-                      </div>
+                    </div>
+                  </div>
                     ))
                   )}
                 </div>

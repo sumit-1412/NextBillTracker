@@ -156,6 +156,7 @@ export default function CommissionerDashboard() {
 
         // Add delivery data to zones
         deliveries.forEach(delivery => {
+          if (!delivery.property || !delivery.property.ward) return;
           const zoneName = delivery.property.ward.corporateName
           const zone = zoneMap.get(zoneName)
           if (zone) {
@@ -171,6 +172,7 @@ export default function CommissionerDashboard() {
         // Calculate staff data
         const staffMap = new Map<string, StaffData>()
         deliveries.forEach(delivery => {
+          if (!delivery.property || !delivery.property.ward || !delivery.staff) return;
           const staffName = delivery.staff.fullName
           if (!staffMap.has(staffName)) {
             staffMap.set(staffName, {
