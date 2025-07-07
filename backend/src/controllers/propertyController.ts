@@ -3,6 +3,11 @@ import Property from '../models/Property';
 import Ward from '../models/Ward';
 import mongoose from 'mongoose';
 
+interface MulterRequest extends Request {
+  file?: Express.Multer.File;
+  files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
+}
+
 // Upload History Model
 interface UploadRecord {
   _id: string;
@@ -206,7 +211,7 @@ export const deleteProperty = async (req: Request, res: Response): Promise<void>
 }; 
 
 // POST /api/properties/upload - Upload bulk properties
-export const uploadProperties = async (req: Request, res: Response): Promise<void> => {
+export const uploadProperties = async (req: MulterRequest, res: Response): Promise<void> => {
   try {
     if (!req.file) {
       res.status(400).json({ message: 'No file uploaded' });
@@ -225,7 +230,7 @@ export const uploadProperties = async (req: Request, res: Response): Promise<voi
       return;
     }
 
-    const headers = lines[0].split(',').map(h => h.trim());
+    const headers = lines[0].split(',').map((h: any) => h.trim());
     const data = lines.slice(1);
     
     let total = 0;
@@ -236,11 +241,11 @@ export const uploadProperties = async (req: Request, res: Response): Promise<voi
 
     // Process each row
     for (let i = 0; i < data.length; i++) {
-      const row = data[i];
-      if (!row.trim()) continue;
+      const line: any = data[i];
+      if (!line.trim()) continue;
       
       total++;
-      const values = row.split(',').map(v => v.trim());
+      const values = line.split(',').map((v: any) => v.trim());
       
       try {
         // Map CSV columns to property fields

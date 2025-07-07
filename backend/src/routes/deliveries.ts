@@ -9,15 +9,16 @@ import {
   updateDelivery, 
   getStaffHistory 
 } from '../controllers/deliveryController';
+import { Request } from 'express';
 
 const router = express.Router();
 
 // Configure multer for photo uploads
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (req: Request, file: Express.Multer.File, cb: Function) => {
     cb(null, 'uploads/delivery-photos/');
   },
-  filename: (req, file, cb) => {
+  filename: (req: Request, file: Express.Multer.File, cb: Function) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     cb(null, 'delivery-' + uniqueSuffix + '.jpg');
   }
@@ -28,7 +29,7 @@ const upload = multer({
   limits: {
     fileSize: 10 * 1024 * 1024 // 10MB limit
   },
-  fileFilter: (req, file, cb) => {
+  fileFilter: (req: Request, file: Express.Multer.File, cb: Function) => {
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
     } else {
